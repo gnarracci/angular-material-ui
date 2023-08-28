@@ -1,20 +1,53 @@
 <div class="center-content">
-  <div class="center-content-gap">
+  <div [formGroup]="form" class="center-content-gap">
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input matInput [formControl]="name">
+      <input matInput formControlName="name" />
+      <div *ngIf="form.get('name').invalid && form.get('name').touched">
+        <mat-error *ngIf="form.get('name').errors['required']"
+          >El nombre es requerido!</mat-error
+        >
+      </div>
     </mat-form-field>
     <p>{{ name.value }}</p>
     <mat-form-field appearance="fill">
       <mat-label>Correo Electronico</mat-label>
-      <input matInput [formControl]="email">
+      <input matInput formControlName="email" />
+      <div *ngIf="form.get('email').invalid && form.get('email').touched">
+        <mat-error *ngIf="form.get('email').errors['required']"
+          >El correo electronico es requerido!</mat-error
+        >
+        <mat-error *ngIf="form.get('email').errors['email']"
+          >El correo electronico no es valido!</mat-error
+        >
+      </div>
     </mat-form-field>
     <p>{{ email.value }}</p>
     <mat-form-field appearance="fill">
       <mat-label>Nro. de Telefono</mat-label>
-      <input matInput [formControl]="phoneNumber">
+      <input matInput formControlName="phoneNumber" />
+      <div
+        *ngIf="
+          form.get('phoneNumber').invalid && form.get('phoneNumber').touched
+        "
+      >
+        <mat-error *ngIf="form.get('phoneNumber').errors['required']"
+          >El nro. de telefono es requerido!</mat-error
+        >
+        <mat-error *ngIf="form.controls['phoneNumber'].errors['minlength']"
+          >El nro. de telefono es invalido, deben ser 10 caracteres
+          minimo!</mat-error
+        >
+      </div>
     </mat-form-field>
     <p>{{ phoneNumber.value }}</p>
-    <button mat-raised-button color="primary" (click)="sendValues()">Enviar</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="sendValues()"
+      [disabled]="form.invalid"
+    >
+      Enviar
+    </button>
   </div>
 </div>

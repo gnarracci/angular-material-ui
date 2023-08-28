@@ -14,8 +14,17 @@ export class AppComponent {
 
   form: FormGroup;
 
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
+
   sendValues() {
-    console.log(this.name.value, this.email.value, this.phoneNumber.value);
+    console.log(this.name.value);
+    this.form.reset();
   }
 
 }
